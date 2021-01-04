@@ -1,20 +1,8 @@
 FROM perl:latest
-RUN wget  http://cpanmin.us | perl - --sudo Dancer2
-RUN cpan install Dancer2
-RUN cpan install cpan IPC::Run
-RUN cpan install File::RotateLogs 
-RUN cpan install WWW::Mechanize
-RUN cpan install Test::Output
-RUN cpan install LWP::ConsoleLogger::Everywhere
-RUN cpan install Dancer2::Logger::File::RotateLogs
-RUN cpan install DBD::SQLite
-RUN cpan install Starman
-RUN cpan install YAML
-RUN cpan install URL::Encode::XS
-RUN cpan install CGI::Deurl::XS
-RUN cpan install HTTP::Parser::XS
-RUN cpan install Crypt::SaltedHash
+RUN yum update
+RUN yum install -y perl-CPAN
+RUN sudo wget -O - http://cpanmin.us | sudo perl - Dancer2
 RUN git clone git@github.com:sreknar/Assignment.git
 EXPOSE 9090
 WORKDIR Dancer/CMAdmin
-CMD starman --port 9090 bin/app.psgi
+CMD plackup --port 9090 bin/app.psgi
